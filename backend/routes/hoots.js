@@ -20,5 +20,14 @@ router.put('/:hootId', hootsCtrl.update);
 // DELETE /api/hoots/:hootId (DELETE action)
 router.delete('/:hootId', hootsCtrl.delete);
 
+// Comment Routes Below
+
+// POST /api/hoots/:hootId/comments (CREATE action)
+router.post('/:hootId/comments', hootsCtrl.addComment);
+// PUT /api/hoots/:hootId/comments/:commentId (UPDATE action)
+router.put('/:hootId/comments/:commentId', hootsCtrl.updateComment);
+// DELETE /api/hoots/:hootId/comments/:commentId (DELETE action)
+router.delete('/:hootId/comments/:commentId', hootsCtrl.deleteComment);
+
 
 module.exports = router;
