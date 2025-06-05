@@ -17,6 +17,8 @@ router.post('/', hootsCtrl.create);
 router.get('/:hootId', hootsCtrl.show);
 // PUT /api/hoots/:hootId (UPDATE action)
 router.put('/:hootId', hootsCtrl.update);
+// DELETE /api/hoots/:hootId (DELETE action)
+router.delete('/:hootId', hootsCtrl.delete);
 
 
 module.exports = router;

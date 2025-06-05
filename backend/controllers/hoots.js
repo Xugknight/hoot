@@ -6,6 +6,7 @@ module.exports = {
   create,
   show,
   update,
+  delete: deleteHoot,
 };
 
 async function index(req, res) {
@@ -60,5 +61,19 @@ async function update(req, res) {
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: 'Failed to update hoot' });
+  }
+}
+
+async function deleteHoot(req, res) {
+  try {
+    const hoot = await Hoot.findById(req.params.hootId);
+    if (!hoot.author.equals(req.user._id)) {
+      return res.status(403).send("You're not allowed to do that!");
+    }
+    const deletedHoot = await Hoot.findByIdAndDelete(req.params.hootId);
+    res.status(201).json(deletedHoot);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: 'Failed to delete hoot' });
   }
 }
