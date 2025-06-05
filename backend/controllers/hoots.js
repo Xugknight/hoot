@@ -9,6 +9,7 @@ module.exports = {
   delete: deleteHoot,
   addComment,
   updateComment,
+  deleteComment,
 };
 
 async function index(req, res) {
@@ -116,9 +117,27 @@ async function updateComment(req, res) {
 
     comment.text = req.body.text;
     await hoot.save();
-    res.status(200).json({ message: "Comment updated successfully" });
+    res.status(200).json({ message: "Comment Updated Successfully" });
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: 'Failed to Update Comment' });
+  }
+}
+
+async function deleteComment(req, res) {
+  try {
+    const hoot = await Hoot.findById(req.params.hootId);
+    const comment = hoot.comments.id(req.params.commentId);
+    
+    if (comment.author.toString() !== req.user._id) {
+      return res.status(403).json({ message: "You are not authorized to edit this comment" });
+    }
+
+    hoot.comments.remove({ _id: req.params.commentId });
+    await hoot.save();
+    res.status(200).json({ message: "Comment Deleted Successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: 'Failed to Delete Comment' });
   }
 }
