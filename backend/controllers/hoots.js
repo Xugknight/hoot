@@ -14,7 +14,7 @@ module.exports = {
 
 async function index(req, res) {
   try {
-    const hoots = await Hoot.find({});
+    const hoots = await Hoot.find({}).populate('author', 'name');
     // Below would return all posts for just the logged in user
     // const posts = await Post.find({author: req.user._id});
     res.json(hoots);

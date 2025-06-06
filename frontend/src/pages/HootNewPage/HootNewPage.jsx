@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import * as postService from '../../services/postService';
+import * as hootService from '../../services/hootService';
 
-export default function NewPostPage() {
+export default function HootNewPage() {
   const [content, setContent] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   
@@ -12,10 +12,10 @@ export default function NewPostPage() {
     evt.preventDefault();
     try {
       // sendRequest is expecting an object as the payload
-      await postService.create({ content });
-      navigate('/posts');
+      await hootService.create({ content });
+      navigate('/hoots');
     } catch (err) {
-      setErrorMsg('Adding Post Failed');
+      setErrorMsg('Adding Hoot Failed');
     }
   }
 

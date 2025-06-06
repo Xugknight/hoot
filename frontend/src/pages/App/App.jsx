@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Routes, Route } from 'react-router';
 import { getUser } from '../../services/authService';
 import HomePage from '../HomePage/HomePage';
-import PostListPage from '../PostListPage/PostListPage';
-import NewPostPage from '../NewPostPage/NewPostPage';
+import HootListPage from '../HootListPage/HootListPage';
+import HootDetailsPage from '../HootDetailsPage/HootDetailsPage';
+import HootNewPage from '../HootNewPage/HootNewPage';
+import HootEditPage from '../HootEditPage/HootEditPage';
 import SignUpPage from '../SignUpPage/SignUpPage';
 import LogInPage from '../LogInPage/LogInPage';
 import NavBar from '../../components/NavBar/NavBar';
@@ -16,21 +18,24 @@ export default function App() {
     <main className="App">
       <NavBar user={user} setUser={setUser} />
       <section id="main-section">
-        {user ? (
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/posts" element={<PostListPage />} />
-            <Route path="/posts/new" element={<NewPostPage />} />
-            <Route path="*" element={null} />
-          </Routes>
-        ) : (
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/signup" element={<SignUpPage setUser={setUser} />} />
-            <Route path="/login" element={<LogInPage setUser={setUser} />} />
-            <Route path="*" element={null} />
-          </Routes>
-        )}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {user ? (
+            <>
+              <Route path="/hoots" element={<HootListPage user={user} />} />
+              <Route path="/hoots/new" element={<HootNewPage user={user} />} />
+              <Route path="/hoots/:hootId" element={<HootDetailsPage user={user} />} />
+              <Route path="/hoots/:hootId/edit" element={<HootEditPage user={user} />} />
+              <Route path="*" element={null} />
+            </>
+          ) : (
+            <>
+              <Route path="/signup" element={<SignUpPage setUser={setUser} />} />
+              <Route path="/login" element={<LogInPage setUser={setUser} />} />
+              <Route path="*" element={null} />
+            </>
+          )}
+        </Routes>
       </section>
     </main>
   );
